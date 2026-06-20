@@ -9,10 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg-deep:    #07070d;
-      --bg-mid:     #0d1117;
       --bg-card:    rgba(255,255,255,0.04);
       --border:     rgba(255,255,255,0.08);
       --amber:      #f5a623;
@@ -24,9 +22,7 @@
       --text-sec:   #8b8fa8;
       --text-dim:   #4a4e6b;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'Inter', sans-serif;
       background: var(--bg-deep);
@@ -34,76 +30,51 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
-    /* scanlines */
     body::before {
       content: '';
       position: fixed; inset: 0;
       background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
       pointer-events: none; z-index: 0;
     }
-
-    /* ambient orbs */
     .orb { position: fixed; border-radius: 50%; filter: blur(130px); opacity: 0.16; pointer-events: none; z-index: 0; }
     .orb-1 { width: 600px; height: 600px; background: var(--violet); top: -200px; left: -150px; }
-    .orb-2 { width: 500px; height: 500px; background: var(--amber);  bottom: -150px; right: -100px; }
+    .orb-2 { width: 500px; height: 500px; background: var(--amber); bottom: -150px; right: -100px; }
 
-    /* ── HEADER ── */
-    header {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 60px 20px 44px;
-    }
-
+    /* HEADER */
+    header { position: relative; z-index: 1; text-align: center; padding: 60px 20px 44px; }
     .logo-tag {
-      display: inline-block;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--amber);
-      background: var(--amber-dim);
-      border: 1px solid rgba(245,166,35,0.22);
-      border-radius: 20px; padding: 4px 14px; margin-bottom: 18px;
+      display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--amber); background: var(--amber-dim);
+      border: 1px solid rgba(245,166,35,0.22); border-radius: 20px; padding: 4px 14px; margin-bottom: 18px;
     }
-
     h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(52px, 10vw, 108px);
-      letter-spacing: 0.04em; line-height: 0.9;
+      font-size: clamp(52px, 10vw, 108px); letter-spacing: 0.04em; line-height: 0.9;
       background: linear-gradient(135deg, #fff 30%, #a89adb 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 10px;
     }
+    .tagline { font-size: 13px; color: var(--text-sec); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 36px; }
 
-    .tagline {
-      font-size: 13px; color: var(--text-sec);
-      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 36px;
-    }
-
-    /* ── SEARCH ── */
-    .search-wrap { max-width: 620px; margin: 0 auto; }
-
+    /* SEARCH */
+    .search-wrap { max-width: 620px; margin: 0 auto; position: relative; }
     .search-inner {
       display: flex; align-items: center;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--border); border-radius: 50px;
-      padding: 6px 6px 6px 20px;
-      backdrop-filter: blur(16px);
-      transition: border-color .25s, box-shadow .25s;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 50px; padding: 6px 6px 6px 20px;
+      backdrop-filter: blur(16px); transition: border-color .25s, box-shadow .25s;
     }
-
     .search-inner:focus-within {
       border-color: rgba(245,166,35,0.5);
       box-shadow: 0 0 0 3px var(--amber-dim), 0 8px 40px rgba(0,0,0,0.4);
     }
-
     .search-icon { color: var(--text-sec); margin-right: 10px; flex-shrink: 0; }
-
     #searchInput {
       flex: 1; background: none; border: none; outline: none;
       font-family: 'Inter', sans-serif; font-size: 16px;
       color: var(--text-pri); caret-color: var(--amber);
     }
     #searchInput::placeholder { color: var(--text-dim); }
-
     #searchBtn {
       background: linear-gradient(135deg, var(--amber), #e8920f);
       color: #0a0808; font-family: 'Inter', sans-serif;
@@ -115,85 +86,63 @@
     #searchBtn:hover  { transform: scale(1.04); box-shadow: 0 0 28px var(--amber-glow); }
     #searchBtn:active { transform: scale(0.98); }
 
-    /* ── SUGGESTIONS ── */
+    /* SUGGESTIONS */
     .suggestions {
       position: absolute; left: 0; right: 0; top: calc(100% + 8px);
-      background: #13131f; border: 1px solid var(--border);
-      border-radius: 16px; overflow: hidden;
-      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
-      z-index: 100; display: none;
+      background: #13131f; border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,0.6); z-index: 100; display: none;
     }
     .suggestions.open { display: block; }
     .suggestion-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 16px; cursor: pointer;
-      transition: background .15s;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex; align-items: center; gap: 12px; padding: 11px 16px;
+      cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.04); transition: background .15s;
     }
     .suggestion-item:last-child { border-bottom: none; }
-    .suggestion-item:hover { background: rgba(255,255,255,0.05); }
-    .sug-thumb {
-      width: 36px; height: 52px; object-fit: cover; border-radius: 5px;
-      background: var(--bg-mid); flex-shrink: 0;
-    }
-    .sug-info { flex: 1; min-width: 0; }
-    .sug-title { font-size: 14px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .sug-year  { font-size: 12px; color: var(--text-sec); margin-top: 2px; }
-    .sug-price { font-size: 12px; color: var(--amber); margin-top: 2px; }
+    .suggestion-item:hover { background: rgba(255,255,255,0.06); }
+    .sug-icon { font-size: 22px; flex-shrink: 0; }
+    .sug-title { font-size: 14px; font-weight: 500; }
+    .sug-desc  { font-size: 12px; color: var(--text-sec); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 400px; }
 
-    /* ── MAIN ── */
+    /* MAIN */
     main { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
 
-    /* ── LOADING ── */
+    /* LOADING */
     #loading { display: none; text-align: center; padding: 60px 0; }
     .spinner {
-      width: 46px; height: 46px;
-      border: 3px solid var(--border); border-top-color: var(--amber);
-      border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 14px;
+      width: 46px; height: 46px; border: 3px solid var(--border);
+      border-top-color: var(--amber); border-radius: 50%;
+      animation: spin .8s linear infinite; margin: 0 auto 14px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     #loading p { color: var(--text-sec); font-size: 14px; }
 
-    /* ── ERROR ── */
+    /* ERROR */
     #error { display: none; text-align: center; padding: 48px 20px; }
     .error-icon { font-size: 48px; margin-bottom: 12px; }
     #error h3 { font-size: 20px; margin-bottom: 8px; }
     #error p  { color: var(--text-sec); font-size: 14px; }
 
-    /* ── RESULT ── */
+    /* RESULT */
     #result { display: none; animation: fadeUp .5s cubic-bezier(.22,1,.36,1) both; }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(26px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     .movie-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border); border-radius: 24px;
-      backdrop-filter: blur(24px);
-      overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 24px; backdrop-filter: blur(24px);
+      overflow: hidden; box-shadow: 0 32px 80px rgba(0,0,0,0.6);
     }
+    .card-inner { display: grid; grid-template-columns: 280px 1fr; }
 
-    .card-inner {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-    }
-
-    /* poster column */
-    .poster-col {
-      background: #08080f;
-      display: flex; align-items: stretch;
-    }
+    /* POSTER COL */
+    .poster-col { background: #08080f; display: flex; align-items: stretch; }
     .poster-wrap {
       width: 100%; padding: 30px 24px;
       display: flex; flex-direction: column; align-items: center; gap: 18px;
     }
-
-    /* signature: pulsing glow ring */
     .poster-ring {
-      position: relative; border-radius: 14px;
-      padding: 3px;
+      position: relative; border-radius: 14px; padding: 3px;
       background: linear-gradient(145deg, var(--amber), var(--violet), transparent);
       animation: ringPulse 3s ease-in-out infinite;
     }
@@ -204,38 +153,32 @@
     #posterImg {
       width: 100%; max-width: 232px; aspect-ratio: 2/3;
       object-fit: cover; border-radius: 11px; display: block;
+      background: #111;
+    }
+    .no-poster {
+      width: 232px; aspect-ratio: 2/3; border-radius: 11px;
+      background: #111; display: flex; align-items: center;
+      justify-content: center; font-size: 56px; color: var(--text-dim);
     }
 
-    /* rating badge */
+    /* RATING BADGE */
     .rating-badge {
       display: flex; align-items: center; gap: 10px;
-      background: var(--amber-dim);
-      border: 1px solid rgba(245,166,35,0.28); border-radius: 10px;
-      padding: 10px 16px; width: 100%; justify-content: center;
+      background: var(--amber-dim); border: 1px solid rgba(245,166,35,0.28);
+      border-radius: 10px; padding: 10px 16px; width: 100%; justify-content: center;
     }
     .rating-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; color: var(--amber); text-transform: uppercase; }
-    .star-bar { display: flex; gap: 3px; }
-    .star { font-size: 13px; color: var(--amber); }
+    .star-bar { display: flex; gap: 2px; margin-top: 3px; }
+    .star { font-size: 12px; color: var(--amber); }
     .star.empty { color: var(--text-dim); }
     .rating-score { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--amber); line-height: 1; }
     .rating-max   { font-size: 12px; color: var(--text-dim); align-self: flex-end; margin-bottom: 2px; }
 
-    /* content rating pill */
-    .content-rating {
-      display: inline-block;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      color: var(--text-sec);
-      border: 1px solid var(--border); border-radius: 6px;
-      padding: 3px 10px;
-    }
-
-    /* details column */
+    /* DETAILS COL */
     .details-col {
-      padding: 32px 34px;
-      border-left: 1px solid var(--border);
+      padding: 32px 34px; border-left: 1px solid var(--border);
       display: flex; flex-direction: column; gap: 22px;
     }
-
     .meta-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
     .year-tag {
       font-size: 12px; font-weight: 500; color: var(--text-sec);
@@ -243,38 +186,28 @@
       border-radius: 6px; padding: 3px 10px;
     }
     .runtime-tag { font-size: 13px; color: var(--text-sec); }
-
     #movieTitle {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: 0.03em; line-height: 1; color: var(--text-pri);
+      font-size: clamp(28px, 4vw, 44px); letter-spacing: 0.03em; line-height: 1;
     }
-
     .genres { display: flex; flex-wrap: wrap; gap: 8px; }
     .genre-pill {
       font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
       color: var(--violet); background: var(--violet-dim);
       border: 1px solid rgba(124,58,237,0.28); border-radius: 20px; padding: 4px 13px;
     }
-
     .plot {
       font-size: 15px; line-height: 1.75; color: #adb0c6;
       border-left: 2px solid var(--amber); padding-left: 16px;
     }
-
     .divider { height: 1px; background: var(--border); }
-
-    .details-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px;
-    }
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px; }
     .detail-label {
       font-size: 10px; font-weight: 600; letter-spacing: 0.2em;
       text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px;
     }
     .detail-value { font-size: 14px; font-weight: 500; color: var(--text-pri); line-height: 1.4; }
     .detail-value.hl { color: var(--amber); }
-
-    /* cast */
     .cast-label { font-size: 10px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 10px; }
     .cast-chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .cast-chip {
@@ -285,15 +218,11 @@
     }
     .cast-chip:hover { border-color: rgba(245,166,35,0.3); color: var(--amber); }
 
-    /* api credit */
-    .api-credit {
-      text-align: center; margin-top: 24px;
-      font-size: 12px; color: var(--text-dim);
-    }
+    .api-credit { text-align: center; margin-top: 20px; font-size: 12px; color: var(--text-dim); }
     .api-credit a { color: var(--text-sec); text-decoration: none; }
     .api-credit a:hover { color: var(--amber); }
 
-    /* ── RESPONSIVE ── */
+    /* RESPONSIVE */
     @media (max-width: 700px) {
       .card-inner { grid-template-columns: 1fr; }
       .poster-col { border-bottom: 1px solid var(--border); }
@@ -302,17 +231,12 @@
       #posterImg { max-width: 160px; }
       .details-grid { grid-template-columns: 1fr; }
     }
-
     @media (prefers-reduced-motion: reduce) {
       * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
     }
-
-    /* relative wrapper for suggestions */
-    .search-wrap { position: relative; }
   </style>
 </head>
 <body>
-
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
 
@@ -320,7 +244,6 @@
     <div class="logo-tag">✦ Movie Explorer</div>
     <h1>CineSearch</h1>
     <p class="tagline">Every frame has a story — find yours</p>
-
     <div class="search-wrap">
       <div class="search-inner">
         <svg class="search-icon" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -344,28 +267,25 @@
     <div id="result">
       <div class="movie-card">
         <div class="card-inner">
-
-          <!-- Poster -->
           <div class="poster-col">
             <div class="poster-wrap">
               <div class="poster-ring">
-                <img id="posterImg" src="" alt="Movie Poster"/>
+                <img id="posterImg" src="" alt="Movie Poster" onerror="this.style.display='none';document.getElementById('noPoster').style.display='flex'"/>
+                <div class="no-poster" id="noPoster" style="display:none">🎬</div>
               </div>
               <div class="rating-badge">
                 <div>
-                  <div class="rating-label">Rating</div>
+                  <div class="rating-label">IMDb Score</div>
                   <div class="star-bar" id="starBar"></div>
                 </div>
                 <div style="display:flex;align-items:baseline;gap:3px">
                   <span class="rating-score" id="ratingScore">—</span>
-                  <span class="rating-max">/5</span>
+                  <span class="rating-max">/10</span>
                 </div>
               </div>
-              <span class="content-rating" id="contentRating"></span>
             </div>
           </div>
 
-          <!-- Details -->
           <div class="details-col">
             <div>
               <div class="meta-top">
@@ -374,292 +294,318 @@
               </div>
               <div id="movieTitle"></div>
             </div>
-
             <div class="genres" id="genreList"></div>
-
             <p class="plot" id="plotText"></p>
-
             <div class="divider"></div>
-
             <div class="details-grid">
               <div>
                 <div class="detail-label">Director</div>
                 <div class="detail-value" id="director"></div>
               </div>
               <div>
-                <div class="detail-label">Artist / Studio</div>
-                <div class="detail-value" id="artist"></div>
-              </div>
-              <div>
                 <div class="detail-label">Language</div>
                 <div class="detail-value" id="language"></div>
+              </div>
+              <div>
+                <div class="detail-label">Box Office</div>
+                <div class="detail-value hl" id="boxOffice"></div>
               </div>
               <div>
                 <div class="detail-label">Country</div>
                 <div class="detail-value" id="country"></div>
               </div>
-              <div>
-                <div class="detail-label">Price / Rental</div>
-                <div class="detail-value hl" id="price"></div>
-              </div>
-              <div>
-                <div class="detail-label">HD Available</div>
-                <div class="detail-value" id="hdAvailable"></div>
-              </div>
             </div>
-
             <div class="divider"></div>
-
             <div>
-              <div class="cast-label">Also In This Collection</div>
+              <div class="cast-label">Main Cast</div>
               <div class="cast-chips" id="castList"></div>
             </div>
           </div>
-
         </div>
       </div>
-      <p class="api-credit">Data via <a href="https://itunes.apple.com" target="_blank" rel="noopener">iTunes Search API</a> — free &amp; open, no key required</p>
+      <p class="api-credit">Data via <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> &amp; <a href="https://en.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a> — free &amp; open, no key required</p>
     </div>
   </main>
 
-  <script>
-    const searchInput  = document.getElementById('searchInput');
-    const searchBtn    = document.getElementById('searchBtn');
-    const suggestionsEl= document.getElementById('suggestions');
-    const loadingEl    = document.getElementById('loading');
-    const errorEl      = document.getElementById('error');
-    const resultEl     = document.getElementById('result');
+<script>
+// ── DOM refs ────────────────────────────────────────────────
+const searchInput   = document.getElementById('searchInput');
+const searchBtn     = document.getElementById('searchBtn');
+const suggestionsEl = document.getElementById('suggestions');
+const loadingEl     = document.getElementById('loading');
+const errorEl       = document.getElementById('error');
+const resultEl      = document.getElementById('result');
 
-    let suggestDebounce = null;
-    let allResults = [];
+let debounceTimer = null;
+let currentResults = [];
 
-    // ── Utilities ──────────────────────────────────────────
-    const show = el => el.style.display = 'block';
-    const hide = el => el.style.display = 'none';
-    const setText = (id, val) => document.getElementById(id).textContent = val || '—';
+// ── Events ──────────────────────────────────────────────────
+searchBtn.addEventListener('click', doSearch);
+searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+searchInput.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  const q = searchInput.value.trim();
+  if (q.length < 2) { closeSuggestions(); return; }
+  debounceTimer = setTimeout(() => fetchSuggestions(q), 350);
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) closeSuggestions();
+});
 
-    // ── iTunes API base ─────────────────────────────────────
-    const ITUNES = 'https://itunes.apple.com/search?media=movie&entity=movie&limit=10&country=us&term=';
+// ── Wikipedia search for suggestions ────────────────────────
+async function fetchSuggestions(q) {
+  try {
+    const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(q + ' film')}&srnamespace=0&srlimit=6&format=json&origin=*`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    const hits = (data.query?.search || []);
+    currentResults = hits;
+    renderSuggestions(hits);
+  } catch(_) { closeSuggestions(); }
+}
 
-    // ── Search on button / Enter ────────────────────────────
-    searchBtn.addEventListener('click', () => pickBest());
-    searchInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') pickBest();
-    });
-
-    // ── Live suggestions ────────────────────────────────────
-    searchInput.addEventListener('input', () => {
-      clearTimeout(suggestDebounce);
-      const q = searchInput.value.trim();
-      if (q.length < 2) { closeSuggestions(); return; }
-      suggestDebounce = setTimeout(() => fetchSuggestions(q), 300);
-    });
-
-    document.addEventListener('click', e => {
-      if (!e.target.closest('.search-wrap')) closeSuggestions();
-    });
-
-    async function fetchSuggestions(q) {
-      try {
-        const res  = await fetch(ITUNES + encodeURIComponent(q));
-        const data = await res.json();
-        allResults = (data.results || []).filter(r => r.wrapperType === 'track' && r.kind === 'feature-movie');
-        renderSuggestions(allResults);
-      } catch(_) { closeSuggestions(); }
-    }
-
-    function renderSuggestions(items) {
-      if (!items.length) { closeSuggestions(); return; }
-      suggestionsEl.innerHTML = items.slice(0, 6).map((m, i) => {
-        const year  = m.releaseDate ? m.releaseDate.slice(0,4) : '';
-        const price = m.trackPrice  > 0 ? `$${m.trackPrice.toFixed(2)}` : m.collectionPrice > 0 ? `$${m.collectionPrice.toFixed(2)}` : 'Free/Included';
-        const thumb = m.artworkUrl100 ? m.artworkUrl100.replace('100x100', '60x90') : '';
-        return `<div class="suggestion-item" data-idx="${i}">
-          ${thumb ? `<img class="sug-thumb" src="${thumb}" alt="" loading="lazy"/>` : '<div class="sug-thumb"></div>'}
-          <div class="sug-info">
-            <div class="sug-title">${escHtml(m.trackName || m.collectionName || '')}</div>
-            <div class="sug-year">${year}${m.primaryGenreName ? ' · ' + m.primaryGenreName : ''}</div>
-            <div class="sug-price">${price}</div>
-          </div>
-        </div>`;
-      }).join('');
-      suggestionsEl.classList.add('open');
-
-      suggestionsEl.querySelectorAll('.suggestion-item').forEach(el => {
-        el.addEventListener('click', () => {
-          const idx = parseInt(el.dataset.idx);
-          closeSuggestions();
-          populate(allResults[idx]);
-          hide(loadingEl); hide(errorEl);
-          show(resultEl);
-          searchInput.value = allResults[idx].trackName || allResults[idx].collectionName || '';
-        });
-      });
-    }
-
-    function closeSuggestions() {
-      suggestionsEl.classList.remove('open');
-      suggestionsEl.innerHTML = '';
-    }
-
-    // ── Pick best match from current query ──────────────────
-    async function pickBest() {
-      const q = searchInput.value.trim();
-      if (!q) return;
+function renderSuggestions(items) {
+  if (!items.length) { closeSuggestions(); return; }
+  suggestionsEl.innerHTML = items.map((item, i) => {
+    const clean = item.snippet.replace(/<[^>]+>/g, '').replace(/&quot;/g,'"').replace(/&#039;/g,"'").slice(0, 90);
+    return `<div class="suggestion-item" data-idx="${i}">
+      <span class="sug-icon">🎬</span>
+      <div>
+        <div class="sug-title">${escHtml(item.title)}</div>
+        <div class="sug-desc">${escHtml(clean)}…</div>
+      </div>
+    </div>`;
+  }).join('');
+  suggestionsEl.classList.add('open');
+  suggestionsEl.querySelectorAll('.suggestion-item').forEach(el => {
+    el.addEventListener('click', () => {
+      const title = currentResults[+el.dataset.idx]?.title;
+      searchInput.value = title;
       closeSuggestions();
-      hide(resultEl); hide(errorEl); show(loadingEl);
+      doSearch();
+    });
+  });
+}
 
-      try {
-        const res  = await fetch(ITUNES + encodeURIComponent(q));
-        const data = await res.json();
-        hide(loadingEl);
+function closeSuggestions() {
+  suggestionsEl.classList.remove('open');
+  suggestionsEl.innerHTML = '';
+}
 
-        const movies = (data.results || []).filter(r => r.kind === 'feature-movie');
-        if (!movies.length) {
-          document.getElementById('errorTitle').textContent = 'No movie found';
-          document.getElementById('errorMsg').textContent   = 'Try a different title or check spelling.';
-          show(errorEl); return;
-        }
+// ── Main search ──────────────────────────────────────────────
+async function doSearch() {
+  const q = searchInput.value.trim();
+  if (!q) return;
+  closeSuggestions();
+  hide(resultEl); hide(errorEl); show(loadingEl);
 
-        // Pick closest title match
-        const best = bestMatch(movies, q);
-        allResults = movies;
-        populate(best);
-        show(resultEl);
+  try {
+    // Step 1: Search Wikipedia for the movie page
+    const searchUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(q + ' film')}&srnamespace=0&srlimit=5&format=json&origin=*`;
+    const searchRes  = await fetch(searchUrl);
+    const searchData = await searchRes.json();
+    const hits = searchData.query?.search || [];
 
-      } catch(err) {
-        hide(loadingEl);
-        document.getElementById('errorTitle').textContent = 'Connection error';
-        document.getElementById('errorMsg').textContent   = 'Could not reach iTunes API. Check your internet.';
-        show(errorEl);
-      }
+    if (!hits.length) { showError('Movie not found', 'Try a different title or check the spelling.'); return; }
+
+    // Pick best match
+    const best = hits[0];
+    const pageTitle = best.title;
+
+    // Step 2: Get full page extract + info
+    const pageUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=extracts|pageimages|revisions&exintro=true&explaintext=true&piprop=original&rvprop=content&rvsection=0&format=json&origin=*&exsentences=5`;
+    const pageRes  = await fetch(pageUrl);
+    const pageData = await pageRes.json();
+    const pages    = pageData.query?.pages || {};
+    const page     = Object.values(pages)[0];
+
+    if (!page || page.missing) { showError('Movie not found', 'Try a different title or check the spelling.'); return; }
+
+    // Step 3: Get Wikidata structured info via Wikipedia's action=query wbentityusage or directly
+    const wdUrl = `https://en.wikipedia.org/w/api.php?action=query&titles=${encodeURIComponent(pageTitle)}&prop=pageprops&format=json&origin=*`;
+    const wdRes  = await fetch(wdUrl);
+    const wdData = await wdRes.json();
+    const wdPages = wdData.query?.pages || {};
+    const wdPage  = Object.values(wdPages)[0];
+    const qid     = wdPage?.pageprops?.wikibase_item;
+
+    let wikidata = {};
+    if (qid) {
+      const entityUrl = `https://www.wikidata.org/wiki/Special:EntityData/${qid}.json`;
+      const entityRes  = await fetch(entityUrl);
+      const entityData = await entityRes.json();
+      wikidata = entityData.entities?.[qid] || {};
     }
 
-    // ── Simple title-match scorer ───────────────────────────
-    function bestMatch(movies, query) {
-      const q = query.toLowerCase();
-      return movies.reduce((best, m) => {
-        const title = (m.trackName || m.collectionName || '').toLowerCase();
-        const score = title === q ? 100 : title.startsWith(q) ? 80 : title.includes(q) ? 50 : 0;
-        const bestScore = (best.trackName || best.collectionName || '').toLowerCase() === q ? 100 :
-                          (best.trackName || '').toLowerCase().startsWith(q) ? 80 : 50;
-        return score > bestScore ? m : best;
-      });
+    hide(loadingEl);
+    await populate(page, wikidata, pageTitle);
+    show(resultEl);
+
+  } catch(err) {
+    hide(loadingEl);
+    showError('Connection error', 'Could not reach the API. Check your internet connection.');
+  }
+}
+
+// ── Populate card ────────────────────────────────────────────
+async function populate(page, wd, pageTitle) {
+  const claims = wd.claims || {};
+  const labels = wd.labels || {};
+
+  // Title
+  const title = wd.labels?.en?.value || pageTitle.replace(/ \(film\).*/, '').replace(/ \(\d{4} film\)/, '');
+  document.getElementById('movieTitle').textContent = title;
+
+  // Plot (Wikipedia extract, first few sentences)
+  const extract = (page.extract || '').split('\n').find(l => l.trim().length > 60) || page.extract || '';
+  document.getElementById('plotText').textContent = extract.slice(0, 600) + (extract.length > 600 ? '…' : '');
+
+  // Poster (Wikipedia page image)
+  const posterEl   = document.getElementById('posterImg');
+  const noPosterEl = document.getElementById('noPoster');
+  const imgSrc     = page.original?.source || '';
+  if (imgSrc) {
+    posterEl.src = imgSrc;
+    posterEl.style.display = 'block';
+    noPosterEl.style.display = 'none';
+  } else {
+    // Try Wikidata image (P18)
+    const wdImg = claims.P18?.[0]?.mainsnak?.datavalue?.value;
+    if (wdImg) {
+      const imgName = encodeURIComponent(wdImg.replace(/ /g,'_'));
+      posterEl.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${imgName}?width=400`;
+      posterEl.style.display = 'block';
+      noPosterEl.style.display = 'none';
+    } else {
+      posterEl.style.display = 'none';
+      noPosterEl.style.display = 'flex';
     }
+  }
 
-    // ── Populate card ───────────────────────────────────────
-    function populate(m) {
-      // Poster — request highest res artwork
-      const posterEl = document.getElementById('posterImg');
-      if (m.artworkUrl100) {
-        posterEl.src = m.artworkUrl100.replace('100x100bb', '600x900bb').replace('100x100', '600x900');
-        posterEl.alt = (m.trackName || '') + ' poster';
-      } else {
-        posterEl.src = '';
-      }
+  // Release year (P577)
+  const pubDate = claims.P577?.[0]?.mainsnak?.datavalue?.value?.time || '';
+  const year    = pubDate ? pubDate.slice(1, 5) : '';
+  document.getElementById('releaseYear').textContent = year || '';
 
-      // Title
-      document.getElementById('movieTitle').textContent = m.trackName || m.collectionName || '—';
+  // Runtime (P2047) in minutes
+  const runtimeMins = claims.P2047?.[0]?.mainsnak?.datavalue?.value?.amount;
+  if (runtimeMins) {
+    const m = parseInt(runtimeMins);
+    document.getElementById('runtime').textContent = `${Math.floor(m/60)}h ${m%60}m`;
+  } else {
+    document.getElementById('runtime').textContent = '';
+  }
 
-      // Year
-      setText('releaseYear', m.releaseDate ? m.releaseDate.slice(0,4) : '');
+  // IMDb ID (P345) — build rating link
+  const imdbId = claims.P345?.[0]?.mainsnak?.datavalue?.value;
 
-      // Runtime (iTunes gives ms)
-      if (m.trackTimeMillis) {
-        const mins = Math.round(m.trackTimeMillis / 60000);
-        setText('runtime', `${Math.floor(mins/60)}h ${mins%60}m`);
-      } else {
-        setText('runtime', '');
-      }
+  // Genres (P136)
+  const genreList = document.getElementById('genreList');
+  genreList.innerHTML = '';
+  const genreIds = (claims.P136 || []).slice(0,4).map(g => g.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  if (genreIds.length) {
+    const genreLabels = await resolveLabels(genreIds);
+    genreLabels.forEach(g => {
+      const pill = document.createElement('span');
+      pill.className = 'genre-pill'; pill.textContent = g;
+      genreList.appendChild(pill);
+    });
+  }
 
-      // Rating (iTunes 0–5 customer rating via userRatingCount — no avg exposed, use trackPrice as proxy; show advisory instead)
-      const ratingEl    = document.getElementById('ratingScore');
-      const starBar     = document.getElementById('starBar');
-      const ratingLabel = document.querySelector('.rating-label');
+  // Director (P57)
+  const directorIds = (claims.P57 || []).slice(0,2).map(d => d.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  const directorNames = directorIds.length ? await resolveLabels(directorIds) : [];
+  document.getElementById('director').textContent = directorNames.join(', ') || '—';
 
-      // iTunes doesn't expose average rating in search API — show content advisory rating
-      ratingEl.textContent    = '—';
-      ratingLabel.textContent = 'Rating';
-      starBar.innerHTML = '';
+  // Cast (P161)
+  const castIds = (claims.P161 || []).slice(0,8).map(c => c.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  const castNames = castIds.length ? await resolveLabels(castIds) : [];
+  const castList = document.getElementById('castList');
+  castList.innerHTML = '';
+  castNames.forEach(name => {
+    const chip = document.createElement('span');
+    chip.className = 'cast-chip'; chip.textContent = name;
+    castList.appendChild(chip);
+  });
+  if (!castNames.length) castList.innerHTML = '<span style="color:var(--text-dim);font-size:13px">Not available</span>';
 
-      // Content rating
-      setText('contentRating', m.contentAdvisoryRating || '');
+  // Language (P364)
+  const langIds = (claims.P364 || []).slice(0,2).map(l => l.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  const langNames = langIds.length ? await resolveLabels(langIds) : [];
+  document.getElementById('language').textContent = langNames.join(', ') || '—';
 
-      // Genres
-      const genreList = document.getElementById('genreList');
-      genreList.innerHTML = '';
-      const genres = [m.primaryGenreName].filter(Boolean);
-      // iTunes only gives one genre per movie
-      genres.forEach(g => {
-        const p = document.createElement('span');
-        p.className = 'genre-pill'; p.textContent = g;
-        genreList.appendChild(p);
-      });
+  // Country (P495)
+  const countryIds = (claims.P495 || []).slice(0,2).map(c => c.mainsnak?.datavalue?.value?.id).filter(Boolean);
+  const countryNames = countryIds.length ? await resolveLabels(countryIds) : [];
+  document.getElementById('country').textContent = countryNames.join(', ') || '—';
 
-      // Plot
-      document.getElementById('plotText').textContent = m.longDescription || m.shortDescription || 'No description available.';
+  // Box office (P2142)
+  const bo = claims.P2142?.[0]?.mainsnak?.datavalue?.value;
+  if (bo) {
+    const amt  = parseFloat(bo.amount);
+    const unit = bo.unit?.split('/').pop();
+    document.getElementById('boxOffice').textContent = formatMoney(amt);
+  } else {
+    document.getElementById('boxOffice').textContent = '—';
+  }
 
-      // Director
-      setText('director', m.artistName || '');
+  // IMDb rating — link to IMDb if we have the ID
+  const ratingScoreEl = document.getElementById('ratingScore');
+  const starBar       = document.getElementById('starBar');
+  starBar.innerHTML   = '';
 
-      // Artist / studio (trackArtistName or sellerName)
-      setText('artist', m.artworkUrl100 ? (m.collectionArtistName || m.sellerName || m.artistName || '') : '');
+  if (imdbId) {
+    // We can't fetch IMDb rating directly (no API), but show the IMDb link
+    ratingScoreEl.textContent = '★';
+    ratingScoreEl.style.fontSize = '18px';
+    ratingScoreEl.style.cursor = 'pointer';
+    ratingScoreEl.title = 'View on IMDb';
+    ratingScoreEl.onclick = () => window.open(`https://www.imdb.com/title/${imdbId}/`, '_blank');
+    document.querySelector('.rating-label').textContent = 'View IMDb';
+    const link = document.createElement('a');
+    link.href = `https://www.imdb.com/title/${imdbId}/`;
+    link.target = '_blank'; link.rel = 'noopener';
+    link.style.cssText = 'font-size:11px;color:var(--amber);text-decoration:none;display:block;margin-top:2px';
+    link.textContent = imdbId;
+    starBar.appendChild(link);
+  } else {
+    ratingScoreEl.textContent = '—';
+    ratingScoreEl.style.fontSize = '30px';
+    document.querySelector('.rating-label').textContent = 'IMDb Score';
+  }
+}
 
-      // Language
-      setText('language', languageCode(m.country));
+// ── Resolve Wikidata QIDs to English labels ──────────────────
+async function resolveLabels(ids) {
+  if (!ids.length) return [];
+  try {
+    const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${ids.join('|')}&props=labels&languages=en&format=json&origin=*`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    return ids.map(id => data.entities?.[id]?.labels?.en?.value || id);
+  } catch(_) { return ids; }
+}
 
-      // Country
-      setText('country', countryName(m.country));
+// ── Helpers ──────────────────────────────────────────────────
+function show(el) { el.style.display = 'block'; }
+function hide(el) { el.style.display = 'none';  }
 
-      // Price
-      const purchase = m.trackPrice > 0 ? `Buy $${m.trackPrice.toFixed(2)}` : '';
-      const rental   = m.trackRentalPrice > 0 ? ` · Rent $${m.trackRentalPrice.toFixed(2)}` : '';
-      setText('price', purchase + rental || 'See on iTunes');
+function showError(title, msg) {
+  hide(loadingEl);
+  document.getElementById('errorTitle').textContent = title;
+  document.getElementById('errorMsg').textContent   = msg;
+  show(errorEl);
+}
 
-      // HD
-      setText('hdAvailable', m.isStreamable ? 'Yes ✓' : 'Check iTunes');
+function formatMoney(n) {
+  if (n >= 1e9) return `$${(n/1e9).toFixed(2)}B`;
+  if (n >= 1e6) return `$${(n/1e6).toFixed(1)}M`;
+  return `$${n.toLocaleString()}`;
+}
 
-      // "Cast" — show related movies from same director as chips
-      const castList = document.getElementById('castList');
-      castList.innerHTML = '';
-      if (m.artistName) {
-        const chip = document.createElement('span');
-        chip.className = 'cast-chip';
-        chip.textContent = `More by ${m.artistName}`;
-        chip.style.cursor = 'pointer';
-        chip.addEventListener('click', () => {
-          searchInput.value = m.artistName;
-          pickBest();
-        });
-        castList.appendChild(chip);
-      }
-      if (m.primaryGenreName) {
-        const chip2 = document.createElement('span');
-        chip2.className = 'cast-chip';
-        chip2.textContent = `More ${m.primaryGenreName}`;
-        chip2.style.cursor = 'pointer';
-        chip2.addEventListener('click', () => {
-          searchInput.value = m.primaryGenreName + ' film';
-          pickBest();
-        });
-        castList.appendChild(chip2);
-      }
-    }
-
-    // ── Helpers ─────────────────────────────────────────────
-    function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    function languageCode(country) {
-      const map = { US:'English', GB:'English', AU:'English', CA:'English', FR:'French', DE:'German', JP:'Japanese', IN:'Hindi / English', ES:'Spanish', IT:'Italian', MX:'Spanish', BR:'Portuguese', KR:'Korean', CN:'Chinese', NZ:'English' };
-      return map[country] || country || '—';
-    }
-
-    function countryName(code) {
-      const map = { US:'United States', GB:'United Kingdom', AU:'Australia', CA:'Canada', FR:'France', DE:'Germany', JP:'Japan', IN:'India', ES:'Spain', IT:'Italy', MX:'Mexico', BR:'Brazil', KR:'South Korea', CN:'China', NZ:'New Zealand' };
-      return map[code] || code || '—';
-    }
-  </script>
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 </body>
 </html>
